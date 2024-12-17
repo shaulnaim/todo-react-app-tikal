@@ -1,12 +1,12 @@
-import TodoApp from "./components/features/Todo"
-import { MainLayout } from "./components/layouts/mainLayout"
+import { TodoContainer } from './components/features/todo/ToDoContainer';
+import { MainLayout } from './components/layouts/mainLayout';
 
 function App() {
   return (
     <MainLayout>
-      <TodoApp />
+      <TodoContainer />
     </MainLayout>
-  )
+  );
 }
 
-export default App
+export default App;
