@@ -1,5 +1,5 @@
 // components/features/todo/TodoContainer.tsx
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { TodoInput } from './TodoInput';
 import { TodoFilters } from './TodoFilters';
 import { TodoList } from './TodoList';

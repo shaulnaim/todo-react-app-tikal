@@ -4,8 +4,8 @@ import { Todo } from '../types/todo.type.ts';
 
 export function useTodoStorage() {
   const [todos, setTodos] = useState<Todo[]>(() => {
-    const saved = localStorage.getItem('todos');
-    return saved ? JSON.parse(saved) : [];
+    const savedTodos = localStorage.getItem('todos');
+    return savedTodos ? JSON.parse(savedTodos) : [];
   });
 
   useEffect(() => {
