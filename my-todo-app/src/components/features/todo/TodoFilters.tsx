@@ -9,7 +9,7 @@ export function TodoFilters({ filter, onFilterChange }: TodoFiltersProps) {
       {['all', 'active', 'completed'].map((filterType) => (
         <button
           key={filterType}
-          onClick={() => onFilterChange(filterType as any)}
+          onClick={() => onFilterChange(filterType as 'all' | 'active' | 'completed')}
           className={`px-3 py-1 rounded ${
             filter === filterType ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
           }`}
