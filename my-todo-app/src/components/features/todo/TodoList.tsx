@@ -3,7 +3,7 @@ import { Todo } from '../../../types/todo.type';
 
 interface TodoListProps {
   todos: Todo[];
-  onToggle: (id: number) => void;
+  onToggle: (todo: Todo) => void;  // Expects a Todo object
   onDelete: (id: number) => void;
 }
 
@@ -20,10 +20,10 @@ export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
             <input
               type="checkbox"
               checked={todo.completed}
-              onChange={() => onToggle(todo.id)}
+              onChange={() => onToggle(todo)}
               className="h-4 w-4"
             />
-            <span className={todo.completed ? 'line-through text-gray-500' : ''}>{todo.text}</span>
+            <span className={todo.completed ? 'line-through text-gray-500' : ''}>{todo.title}</span>
           </div>
           <button
             onClick={() => onDelete(todo.id)}
