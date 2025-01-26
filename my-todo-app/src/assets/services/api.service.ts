@@ -1,4 +1,4 @@
-import { Todo } from "../types/todo.type";
+import { Todo } from "../../types/todo.type";
 
 // services/api.service.ts
 const BASE_URL = 'https://jsonplaceholder.typicode.com';

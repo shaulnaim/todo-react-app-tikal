@@ -14,6 +14,7 @@ export function TodoContainer() {
     isLoading,
     addTodo,
     updateTodo,
+    toggleTodo,
     deleteTodo,
     isProcessing
   } = useTodos();
@@ -54,7 +55,7 @@ export function TodoContainer() {
       <TodoFilters filter={filter} onFilterChange={setFilter} />
       <TodoList
         todos={filteredTodos}
-        onToggle={updateTodo}  // Make sure you're passing updateTodo here
+        onToggle={toggleTodo}  // Make sure you're passing updateTodo here
         onDelete={deleteTodo}
       />
       <TodoStats todos={todos} />

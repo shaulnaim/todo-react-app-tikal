@@ -11,6 +11,14 @@ export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
   if (todos.length === 0) {
     return <div className="text-gray-500 text-center py-4">No todos to display</div>;
   }
+  const onChange = (todo: Todo) => {
+    onToggle({
+      ...todo,
+      completed: !todo.completed
+    });
+  };
+
+
 
   return (
     <ul className="space-y-2">
@@ -20,7 +28,7 @@ export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
             <input
               type="checkbox"
               checked={todo.completed}
-              onChange={() => onToggle(todo)}
+              onChange={() => onChange(todo)}
               className="h-4 w-4"
             />
             <span className={todo.completed ? 'line-through text-gray-500' : ''}>{todo.title}</span>

@@ -1,6 +1,6 @@
 // hooks/useTodos.ts
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { todoApi } from '../services/api.service';
+import { todoApi } from '../assets/services/api.service';
 import { Todo } from '../types/todo.type';
 
 export function useTodos() {
@@ -32,6 +32,35 @@ export function useTodos() {
     }
   });
 
+  const toggleTodoMutation = useMutation({
+    mutationFn: (todo: Todo) => todoApi.updateTodo(todo),
+    onMutate: async (updatedTodo) => {
+      // Cancel any outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ['todos'] });
+
+      // Snapshot the previous value
+      const previousTodos = queryClient.getQueryData(['todos']);
+
+      // Optimistically update to the new value
+      queryClient.setQueryData(['todos'], (old: Todo[] = []) => {
+        return old.map(todo =>
+          todo.id === updatedTodo.id ? updatedTodo : todo
+        );
+      });
+
+      // Return context with the previous value
+      return { previousTodos };
+    },
+    onError: (err, newTodo, context) => {
+      // If the mutation fails, roll back to the previous value
+      queryClient.setQueryData(['todos'], context?.previousTodos);
+    },
+    onSettled: () => {
+      // Refetch after error or success
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+    }
+  });
+
   return {
     todos,
     error,
@@ -39,6 +68,7 @@ export function useTodos() {
     addTodo: addTodoMutation.mutate,
     updateTodo: updateTodoMutation.mutate,
     deleteTodo: deleteTodoMutation.mutate,
+    toggleTodo: (todo: Todo) => toggleTodoMutation.mutate(todo),
     isProcessing: addTodoMutation.isPending ||
       updateTodoMutation.isPending ||
       deleteTodoMutation.isPending
